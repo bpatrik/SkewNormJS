@@ -34,7 +34,39 @@ export class SkewNormal {
         return ret;
     }
 
+    /**
+     * cumulative distribution function
+     * @param location
+     * @param scale
+     * @param shape
+     * @param x
+     * @returns {number}
+     */
     public static cdf(location: number = 0, scale: number = 1.0, shape: number = 0, x: number): number {
         return Normal.cdf(location, scale, x) - 2 * OvensTFunction.T((x - location) / scale, shape);
+    }
+
+    public static invcdf(location: number = 0, scale: number = 1.0, shape: number = 0, x: number): number {
+        let f = (x: number) => {
+            return SkewNormal.cdf(location, scale, shape, x);
+        };
+        return SkewNormal.invertFunction(f, -0.0, 10, 0.01, x);
+    }
+
+    private static invertFunction(f: Function, start: number, end: number, step: number, y: number): number {
+        let foundX = NaN;
+        let distance = Math.abs(y - f(start));
+        //TODO: implement binary search
+        for (let x = start; x < end; x += step) {
+            let ret = f(x);
+            let dist = Math.abs(y - ret);
+            if (distance > dist) {
+                foundX = x;
+                distance = dist;
+            }
+
+        }
+
+        return foundX;
     }
 }

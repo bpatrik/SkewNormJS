@@ -1,9 +1,10 @@
 {
   "name": "skewnormjs",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "description": "Skew normal distribution in TypeScript",
   "main": "index.js",
   "scripts": {
+    "install": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/bpatrik/SkewNormJS/issues"
   },
-  "homepage": "https://github.com/bpatrik/SkewNormJS#readme"
+  "homepage": "https://github.com/bpatrik/SkewNormJS#readme",
+  "dependencies": {
+    "typescript": "^2.1.6"
+  }
 }

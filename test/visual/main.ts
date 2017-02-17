@@ -1,5 +1,4 @@
 import {SkewNormal} from "../../src/SkewNormal";
-import {OvensTFunction} from "../../src/OwensTFunction";
 import {ErrorFunction} from "../../src/ErrorFunction";
 import {Normal} from "../../src/Normal";
 declare let Plotly;
@@ -30,6 +29,31 @@ let sncdf = () => {
     };
 
     Plotly.newPlot('skew-normal-cdf', data, layout);
+};
+let sninvcdf = () => {
+    let x = [];
+    let y = [];
+
+    for (let i = -5.0; i < 5.0; i += resolution) {
+        x.push(i);
+        y.push(SkewNormal.invcdf(0.5, 0.17, -0.54, i));
+    }
+
+    let data = [
+        {
+            x: x,
+            y: y,
+            type: 'scatter'
+        }
+    ];
+    let layout = {
+        xaxis: {
+            type: 'number',
+        },
+        title: 'Inverted Skew normal cdf'
+    };
+
+    Plotly.newPlot('inv-skew-normal-cdf', data, layout);
 };
 let ncdf = () => {
     let x = [];
@@ -86,4 +110,5 @@ let erf = () => {
 
 ncdf();
 erf();
+sninvcdf();
 sncdf();
