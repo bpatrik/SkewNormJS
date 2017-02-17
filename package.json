@@ -1,0 +1,19 @@
+{
+  "name": "skewnormjs",
+  "version": "1.0.0",
+  "description": "Skew normal distribution in TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bpatrik/SkewNormJS.git"
+  },
+  "author": "Patrik Braun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bpatrik/SkewNormJS/issues"
+  },
+  "homepage": "https://github.com/bpatrik/SkewNormJS#readme"
+}

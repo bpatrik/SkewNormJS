@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .row {
+            margin: 2px;
+            white-space: nowrap;
+        }
+
+        .time-block {
+            margin-top: 2px;
+            display: inline-block;
+            white-space: nowrap;
+            height: 10px;
+            border: solid 1px #000000;
+
+        }
+
+        .online {
+            background-color: #00FF00
+
+        }
+
+        .offline {
+            background-color: #AAAAAA
+        }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.0/system.src.js"></script>
+</head>
+<body>
+
+
+<div id="peers">
+
+</div>
+<hr/>
+<div id="sessions">
+
+</div>
+<div id="erf"></div>
+<div id="normal-cdf"></div>
+<div id="skew-normal-cdf"></div>
+
+<script>
+    System.config({
+        packages: {
+            './../../': {
+                defaultJSExtensions: 'js'
+            }
+        }
+    });
+    System.import('./main').then(null, console.error.bind(console));
+</script>
+
+
+</body>
+</html>
