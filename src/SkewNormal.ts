@@ -1,5 +1,5 @@
 import {Normal} from "./Normal";
-import {OvensTFunction} from "./OwensTFunction";
+import {OwensTFunction} from "./OwensTFunction";
 export class SkewNormal {
 
     constructor(public location: number = 0, public scale: number = 1.0, public shape: number = 0) {
@@ -43,7 +43,7 @@ export class SkewNormal {
      * @returns {number}
      */
     public static cdf(location: number = 0, scale: number = 1.0, shape: number = 0, x: number): number {
-        return Normal.cdf(location, scale, x) - 2 * OvensTFunction.T((x - location) / scale, shape);
+        return Normal.cdf(location, scale, x) - 2 * OwensTFunction.T((x - location) / scale, shape);
     }
 
     public static invcdf(location: number = 0, scale: number = 1.0, shape: number = 0, x: number): number {

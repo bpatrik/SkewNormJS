@@ -4,7 +4,7 @@
  * "In mathematics, Owen's T function T(h, a), named after statistician Donald Bruce Owen, is defined by
  * {\displaystyle T(h,a)={\frac {1}{2\pi }}\int _{0}^{a}{\frac {e^{-{\frac {1}{2}}h^{2}(1+x^{2})}}{1+x^{2}}}dx\quad \left(-\infty <h,a<+\infty \right).} ..."
  */
-export class OvensTFunction {
+export class OwensTFunction {
 
     private static onePer2Pi = 1 / (2 * Math.PI);
 
@@ -16,7 +16,7 @@ export class OvensTFunction {
             return nominator / denominator;
         };
         let step = a / 10000;
-        return OvensTFunction.onePer2Pi * OvensTFunction.integrate(f, 0, a, step);
+        return OwensTFunction.onePer2Pi * OwensTFunction.integrate(f, 0, a, step);
     }
 
     private static integrate(f: (x: number) => number, start: number, end: number, step: number): number {
