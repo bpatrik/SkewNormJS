@@ -6,9 +6,26 @@ export class SkewNormal {
 
     }
 
-    public random(min: number = -Infinity, max: number = Infinity): number {
-        return SkewNormal.random(this.shape, this.location, this.scale, min, max);
+    public static create(parameters: SkewNormal.Parameters) {
+        return new SkewNormal(parameters.location, parameters.scale, parameters.shape);
     }
+
+    public random(min: number = -Infinity, max: number = Infinity): number {
+        return SkewNormal.random(this.location, this.scale, this.shape, min, max);
+    }
+
+    public cdf(x: number) {
+        return SkewNormal.cdf(this.location, this.scale, this.shape, x);
+    }
+
+    public invcdf(x: number) {
+        return SkewNormal.invcdf(this.location, this.scale, this.shape, x);
+    }
+
+    public expectedValue(x: number) {
+        return SkewNormal.expectedValue(this.location, this.scale, this.shape);
+    }
+
 
     public static random(location: number = 0, scale: number = 1.0, shape: number = 0, min: number = -Infinity, max: number = Infinity): number {
         let sigma, u0, v, u1, ret;
@@ -53,7 +70,7 @@ export class SkewNormal {
         return SkewNormal.invertFunction(f, -0.0, 10, 0.01, x);
     }
 
-    public static expectedValue(location: number = 0, scale: number = 1.0, shape: number = 0){
+    public static expectedValue(location: number = 0, scale: number = 1.0, shape: number = 0) {
         let ro = shape / Math.sqrt(1 + shape * shape);
         return location + scale * ro * Math.sqrt(2 / Math.PI);
     }
@@ -75,3 +92,12 @@ export class SkewNormal {
         return foundX;
     }
 }
+
+export module SkewNormal {
+    export interface Parameters {
+        shape: number,
+        location: number,
+        scale: number
+    }
+}
+
