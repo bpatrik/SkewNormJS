@@ -53,6 +53,11 @@ export class SkewNormal {
         return SkewNormal.invertFunction(f, -0.0, 10, 0.01, x);
     }
 
+    public static expectedValue(location: number = 0, scale: number = 1.0, shape: number = 0){
+        let ro = shape / Math.sqrt(1 + shape * shape);
+        return location + scale * ro * Math.sqrt(2 / Math.PI);
+    }
+
     private static invertFunction(f: Function, start: number, end: number, step: number, y: number): number {
         let foundX = NaN;
         let distance = Math.abs(y - f(start));
