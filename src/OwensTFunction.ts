@@ -1,3 +1,4 @@
+import {Integrator} from "./Integrator";
 /**
  * Owen's T function
  * https://en.wikipedia.org/wiki/Owen%27s_T_function
@@ -15,15 +16,9 @@ export class OwensTFunction {
             let denominator = (1 + x * x);
             return nominator / denominator;
         };
-        let step = a / 10000;
-        return OwensTFunction.onePer2Pi * OwensTFunction.integrate(f, 0, a, step);
+        let step = a / 1000;
+        return OwensTFunction.onePer2Pi * Integrator.integrate(f, 0, a, step);
     }
 
-    private static integrate(f: (x: number) => number, start: number, end: number, step: number): number {
-        let total = 0;
-        for (let x = start; x < end; x += step) {
-            total += f(x + step / 2) * step;
-        }
-        return total;
-    }
+
 }

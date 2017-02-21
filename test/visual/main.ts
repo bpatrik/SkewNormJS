@@ -1,17 +1,21 @@
 import {SkewNormal} from "../../src/SkewNormal";
 import {ErrorFunction} from "../../src/ErrorFunction";
-import {Normal} from "../../src/Normal";
+import {NormalDistribution} from "../../src/NormalDistribution";
 declare let Plotly;
 
 let resolution = 0.01;
+let skenormParam = {shape: -33, location: 0.99, scale: 0.19};
+let normParam: NormalDistribution.Parameters = {mean: -2, stdev: 0.5};
 
-let sncdf = () => {
+
+let sn_pdf = () => {
     let x = [];
     let y = [];
 
+    let skewNorm = SkewNormal.create(skenormParam);
     for (let i = -5.0; i < 5.0; i += resolution) {
         x.push(i);
-        y.push(SkewNormal.cdf(0.5, 0.17, -0.54, i));
+        y.push(skewNorm.pdf(i));
     }
 
     let data = [
@@ -25,18 +29,75 @@ let sncdf = () => {
         xaxis: {
             type: 'number',
         },
-        title: 'Skew normal cdf'
+        title: 'Skew normal pdf: ' + JSON.stringify(skenormParam) + " exp value:" + skewNorm.expectedValue()
+    };
+
+    Plotly.newPlot('skew-normal-pdf', data, layout);
+};
+let sn_random = () => {
+    let x = [];
+    let y = [];
+
+    let skewNorm = SkewNormal.create(skenormParam);
+    for (let i = -5.0; i < 5.0; i += resolution) {
+        x.push(i);
+        y.push(0);
+    }
+    for (let i = 0; i < 100000; i++) {
+        let rnd = skewNorm.random();
+        y[Math.round((rnd) / resolution + 5 / resolution)]++;
+    }
+
+    let data = [
+        {
+            x: x,
+            y: y,
+            type: 'bar'
+        }
+    ];
+    let layout = {
+        xaxis: {
+            type: 'number',
+        },
+        title: 'Skew normal random: ' + JSON.stringify(skenormParam) + " exp value:" + skewNorm.expectedValue()
+    };
+
+    Plotly.newPlot('skew-normal-random', data, layout);
+};
+let sn_cdf = () => {
+    let x = [];
+    let y = [];
+
+    let skewNorm = SkewNormal.create(skenormParam);
+    for (let i = -5.0; i < 5.0; i += resolution) {
+        x.push(i);
+        y.push(skewNorm.cdf(i));
+    }
+
+    let data = [
+        {
+            x: x,
+            y: y,
+            type: 'scatter'
+        }
+    ];
+    let layout = {
+        xaxis: {
+            type: 'number',
+        },
+        title: 'Skew normal cdf: ' + JSON.stringify(skenormParam) + " exp value:" + skewNorm.expectedValue()
     };
 
     Plotly.newPlot('skew-normal-cdf', data, layout);
 };
-let sninvcdf = () => {
+let sn_inv_cdf = () => {
     let x = [];
     let y = [];
 
-    for (let i = -5.0; i < 5.0; i += resolution) {
+    let skewNorm = SkewNormal.create(skenormParam);
+    for (let i = -0.5; i < 1.5; i += resolution / 50) {
         x.push(i);
-        y.push(SkewNormal.invcdf(0.5, 0.17, -0.54, i));
+        y.push(skewNorm.invcdf(i));
     }
 
     let data = [
@@ -55,13 +116,14 @@ let sninvcdf = () => {
 
     Plotly.newPlot('inv-skew-normal-cdf', data, layout);
 };
-let ncdf = () => {
+let n_pdf = () => {
     let x = [];
     let y = [];
 
+    let norm = NormalDistribution.create(normParam);
     for (let i = -5.0; i < 5.0; i += resolution) {
         x.push(i);
-        y.push(Normal.cdf(-2, Math.sqrt(0.5), i));
+        y.push(norm.pdf(i));
     }
 
     let data = [
@@ -75,7 +137,33 @@ let ncdf = () => {
         xaxis: {
             type: 'number',
         },
-        title: 'Normal cdf'
+        title: 'NormalDistribution pdf' + JSON.stringify(skenormParam) + " exp value:" + norm.expectedValue()
+    };
+
+    Plotly.newPlot('normal-pdf', data, layout);
+};
+let n_cdf = () => {
+    let x = [];
+    let y = [];
+
+    let norm = NormalDistribution.create(normParam);
+    for (let i = -5.0; i < 5.0; i += resolution) {
+        x.push(i);
+        y.push(norm.cdf(i));
+    }
+
+    let data = [
+        {
+            x: x,
+            y: y,
+            type: 'scatter'
+        }
+    ];
+    let layout = {
+        xaxis: {
+            type: 'number',
+        },
+        title: 'NormalDistribution cdf ' + JSON.stringify(skenormParam) + " exp value:" + norm.expectedValue()
     };
 
     Plotly.newPlot('normal-cdf', data, layout);
@@ -108,7 +196,10 @@ let erf = () => {
     Plotly.newPlot('erf', data, layout);
 };
 
-ncdf();
 erf();
-sninvcdf();
-sncdf();
+n_pdf();
+n_cdf();
+sn_random();
+sn_cdf();
+sn_pdf();
+sn_inv_cdf();

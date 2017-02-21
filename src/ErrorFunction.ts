@@ -1,3 +1,4 @@
+import {Integrator} from "./Integrator";
 /**
  * Error function
  * http://mathworld.wolfram.com/Erf.html
@@ -58,28 +59,15 @@ export class ErrorFunction {
      * @param x
      */
     public static erf(x: number): number {
-
-
         let f = (t: number): number => {
             return Math.exp(-(t * t));
         };
-        let step = x / 10000;
-        return ErrorFunction.twoPerSqrPi * ErrorFunction.integrate(f, 0, x, 0.01);
+        return ErrorFunction.twoPerSqrPi * Integrator.integrate(f, 0, x, 0.01);
     }
 
-    private static integrate(f: (x: number) => number, start: number, end: number, step: number): number {
-        let total = 0;
-        step = Math.abs(step);
-        if (start <= end) {
-            for (let x = start; x < end; x += step) {
-                total += f(x + step / 2) * step;
-            }
-        } else {
-            step = -Math.abs(step);
-            for (let x = start; x > end; x += step) {
-                total += f(x - step / 2) * step;
-            }
-        }
-        return total;
+    public static erfc(x: number): number {
+        return 1 - this.erf(x);
     }
+
+
 }
