@@ -115,11 +115,17 @@ export class SkewNormal {
         let i = 0;
         let lastDirUp = null;
         let lastValue = NaN;
+
+        let isIncreasing = f(start) < f(end);
+
         while (Math.abs(value - y) > epsilon) {
-            if ((value < y && lastDirUp == false) || (value > y && lastDirUp == true) || Math.abs(distance) > 0.0001) {
+            let isDirChanged = (value < y && lastDirUp == !isIncreasing) ||
+                               (value > y && lastDirUp == isIncreasing);
+            let canDecrease = Math.abs(distance) > 0.0001;
+            if (isDirChanged || canDecrease) {
                 distance /= 2;
             }
-            if (value < y) {
+            if ((value < y && isIncreasing) || (value > y && !isIncreasing)) {
                 lastDirUp = true;
                 position += distance;
             } else {
