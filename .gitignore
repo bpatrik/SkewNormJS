@@ -2,4 +2,6 @@
 .idea/
 
 *.js
-*.map.js
+*.js.map
+
+*d.ts

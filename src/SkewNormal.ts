@@ -120,7 +120,7 @@ export class SkewNormal {
 
         while (Math.abs(value - y) > epsilon) {
             let isDirChanged = (value < y && lastDirUp == !isIncreasing) ||
-                               (value > y && lastDirUp == isIncreasing);
+                (value > y && lastDirUp == isIncreasing);
             let canDecrease = Math.abs(distance) > 0.0001;
             if (isDirChanged || canDecrease) {
                 distance /= 2;
