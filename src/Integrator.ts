@@ -3,13 +3,15 @@ export class Integrator {
         let total = 0;
         if (start <= end) {
             step = Math.abs(step);
+            let stepPer2  = step / 2;
             for (let x = start; x < end; x += step) {
-                total += f(x + step / 2) * step;
+                total += f(x + stepPer2) * step;
             }
         } else {
             step = -Math.abs(step);
+            let stepPer2  = step / 2;
             for (let x = start; x > end; x += step) {
-                total += f(x - step / 2) * step;
+                total += f(x - stepPer2) * step;
             }
         }
         return total;

@@ -1,6 +1,9 @@
 import {NormalDistribution} from "./NormalDistribution";
 import {OwensTFunction} from "./OwensTFunction";
 import {ErrorFunction} from "./ErrorFunction";
+import {FunctionInverter} from "./FunctionInverter";
+
+
 export class SkewNormal {
 
     private static sqrtTwoPi = Math.sqrt(2 * Math.PI);
@@ -96,7 +99,7 @@ export class SkewNormal {
         let f = (x: number) => {
             return SkewNormal.cdf(location, scale, shape, x);
         };
-        return SkewNormal.invertFunction(f, -0.0, 10, y);
+        return FunctionInverter.invertMonoton(f, -0.0, 10, y);
     }
 
     public static expectedValue(location: number = 0, scale: number = 1.0, shape: number = 0) {
@@ -104,47 +107,6 @@ export class SkewNormal {
         return location + scale * ro * Math.sqrt(2 / Math.PI);
     }
 
-    private static invertFunction(f: Function, start: number, end: number, y: number): number {
-
-        //let distance = Math.abs(y - f(start));
-
-        let epsilon = Math.pow(10, -10);
-        let position = (end + start) / 2;
-        let distance = end - position;
-        let value = f(position);
-        let i = 0;
-        let lastDirUp = null;
-        let lastValue = NaN;
-
-        let isIncreasing = f(start) < f(end);
-
-        while (Math.abs(value - y) > epsilon) {
-            let isDirChanged = (value < y && lastDirUp == !isIncreasing) ||
-                (value > y && lastDirUp == isIncreasing);
-            let canDecrease = Math.abs(distance) > 0.0001;
-            if (isDirChanged || canDecrease) {
-                distance /= 2;
-            }
-            if ((value < y && isIncreasing) || (value > y && !isIncreasing)) {
-                lastDirUp = true;
-                position += distance;
-            } else {
-                lastDirUp = false;
-                position -= distance;
-            }
-            value = f(position);
-            if (lastValue == value) {
-                return position;
-            }
-            lastValue = value;
-            i++;
-            if (i > 1000) {
-                return NaN;
-            }
-
-        }
-        return position;
-    }
 }
 
 export module SkewNormal {

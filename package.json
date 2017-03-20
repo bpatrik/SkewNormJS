@@ -1,6 +1,6 @@
 {
   "name": "skewnormjs",
-  "version": "0.8.8",
+  "version": "0.8.12",
   "description": "Skew normal distribution in TypeScript",
   "main": "index.js",
   "scripts": {
