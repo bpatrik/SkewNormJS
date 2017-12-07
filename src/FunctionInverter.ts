@@ -1,7 +1,7 @@
 export class FunctionInverter {
     public static invertMonoton(f: Function, start: number, end: number, y: number) {
 
-        let epsilon = Math.pow(10, -10);
+        const epsilon = Math.pow(10, -10);
         let position = (end + start) / 2;
         let distance = end - position;
         let value = f(position);
