@@ -1,6 +1,6 @@
 {
   "name": "skewnormjs",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "description": "Skew normal distribution in TypeScript",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/bpatrik/SkewNormJS#readme",
   "devDependencies": {
-    "typescript": "^2.6.2"
+    "tslint": "5.14.0",
+    "tslint-consistent-codestyle": "1.15.1",
+    "typescript": "3.3.4000"
   }
 }
